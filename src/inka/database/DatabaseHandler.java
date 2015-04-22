@@ -47,6 +47,7 @@ public class DatabaseHandler {
                 System.out.print("en: " + english + " ");
                 System.out.print("hu: " + hungarian);
             }
+            resultSet.close();
             this.statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,5 +74,5 @@ public class DatabaseHandler {
             return false;
         }
         return true;
-    }
+    }   
 }
