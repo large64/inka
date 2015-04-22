@@ -57,6 +57,7 @@ public class DatabaseHandler {
         return "";
     }
     
+    // Use this function to perform all types of queries, eg. insert, update, delete etc.
     public boolean query(String[] queries) {
         try {
             this.statement = this.c.createStatement();
