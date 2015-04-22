@@ -47,6 +47,7 @@ public class DatabaseHandler {
                 System.out.print("en: " + english + " ");
                 System.out.print("hu: " + hungarian);
             }
+            this.statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
@@ -54,5 +55,21 @@ public class DatabaseHandler {
         
         // @TODO: return List<Card> object
         return "";
+    }
+    
+    public boolean insert(String[] queries) {
+        try {
+            this.statement = this.c.createStatement();
+        
+            for (int i = 0; i < queries.length; ++i) {
+                this.statement.executeUpdate(queries[i]);
+            }
+            
+            this.statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return true;
     }
 }
