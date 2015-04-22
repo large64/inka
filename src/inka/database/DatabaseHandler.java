@@ -30,4 +30,29 @@ public class DatabaseHandler {
         }
         System.out.println("Database connection opened successfully.");
     }
+    
+    // @TODO: rewrite function to return with List<Card>
+    public String select(String query) {
+        try {
+            this.statement = this.c.createStatement();
+            // execute query provided by user
+            ResultSet resultSet = this.statement.executeQuery(query);
+            
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String english = resultSet.getString("en");
+                String hungarian = resultSet.getString("hu");
+                
+                System.out.print("id: " + id + " ");
+                System.out.print("en: " + english + " ");
+                System.out.print("hu: " + hungarian);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+        }
+        
+        // @TODO: return List<Card> object
+        return "";
+    }
 }
