@@ -57,7 +57,7 @@ public class DatabaseHandler {
         return "";
     }
     
-    public boolean insert(String[] queries) {
+    public boolean query(String[] queries) {
         try {
             this.statement = this.c.createStatement();
         
