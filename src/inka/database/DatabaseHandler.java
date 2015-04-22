@@ -65,6 +65,7 @@ public class DatabaseHandler {
                 this.statement.executeUpdate(queries[i]);
             }
             
+            c.commit();
             this.statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
