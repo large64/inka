@@ -74,5 +74,13 @@ public class DatabaseHandler {
             return false;
         }
         return true;
-    }   
+    }
+    
+    public void close() {
+        try {
+            this.c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
