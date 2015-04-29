@@ -34,12 +34,18 @@ public class MainWindow extends JFrame {
         addButton("Ask", mainMenuJPanel);
         panels.add(mainMenuJPanel);
         
-        // Test panel - this should be removed
         JPanel testPanel = new JPanel();
         testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.Y_AXIS));
         addButton("Test", testPanel);
         panels.add(testPanel);
         
+        // this is the panel for Ask
+        CreateAskPanel();
+    }
+    
+    private void CreateAskPanel(){
+        JPanel askPanel = new JPanel();
+        //askPanle.setLayout()
     }
     
     public void changePanel(int numberOfPanel) {
@@ -61,7 +67,14 @@ public class MainWindow extends JFrame {
             if (buttonText.equals("Card Manager")) {
                     Inka.getWindow().changePanel(1);
             }
+            else if(buttonText.equals("Ask")){
+                startAskingFromUser();
+            }
         }
+        
+    }
+    
+    private static void startAskingFromUser(){
         
     }
     
