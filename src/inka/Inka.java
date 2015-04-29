@@ -1,5 +1,8 @@
 package inka;
 
+import javax.swing.JFrame;
+import windows.mainWindow;
+
 public class Inka {
 
     /**
@@ -7,6 +10,9 @@ public class Inka {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        /*JFrame mainWindow = new JFrame();
+        mainWindow.setVisible(true);*/
+        new mainWindow().setVisible(true);
     }
     
 }
