@@ -24,6 +24,16 @@ public class CardDeck {
         harderCardNumber = 1;
     }
     
+    public CardDeck(int easyCardNumber, int hardCardNumber, int harderCardNumber){
+        cards = new HashMap();
+        easyCards = new HashMap();
+        hardCards = new HashMap();
+        harderCards = new HashMap();
+        this.easyCardNumber = easyCardNumber;
+        this.hardCardNumber = hardCardNumber;
+        this.harderCardNumber = harderCardNumber;
+    }
+    
     // delete this function
     public void WriteOutEverything(){
         System.out.println("Cards!");
