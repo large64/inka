@@ -34,7 +34,7 @@ public class CardDeck {
     }
     
     // put cards into easy cards
-    // if there is no enough car the user has to add more cars 
+    // if there is no enough card the user has to add more cards 
     public void loadEasyCards(){
         if(cards.size() >= easyCardNumber){
             // if the size is the same with the number put all the cards into the easycards
@@ -58,7 +58,7 @@ public class CardDeck {
                     String hungarian = cards.get(readyWords[k]);
                     easyCards.put(english, hungarian);
                 }
-                // torolni ezt a kiirast
+                // Delete this function!
                 WriteOutEasyCards();
             }
         }else{
@@ -66,7 +66,7 @@ public class CardDeck {
         }
     }
     
-    // torolni
+    // Delete this function!
     private void WriteOutEasyCards()
     {
         System.out.println("EasyCards");
