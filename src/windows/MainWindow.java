@@ -43,11 +43,13 @@ public class MainWindow extends JFrame {
     }
     
     public void changePanel(int numberOfPanel) {
-        this.getContentPane().remove(this.panel);
+        this.getContentPane().removeAll();
         this.panel = panels.get(numberOfPanel);
-        add(panel);
-        // Call revalidate to refresh content of window
-        this.revalidate();
+        this.add(this.panel);
+        // Call validate to add new content
+        this.validate();
+        // Call repaint to refresh content
+        this.repaint();
     }
     
     private static class changePanelListener implements ActionListener {
@@ -57,7 +59,7 @@ public class MainWindow extends JFrame {
             String buttonText = e.getActionCommand();
             System.out.println(e.getActionCommand());
             if (buttonText.equals("Card Manager")) {
-                Inka.getWindow().changePanel(1);
+                    Inka.getWindow().changePanel(1);
             }
         }
         
