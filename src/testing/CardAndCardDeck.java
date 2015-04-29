@@ -4,7 +4,7 @@ package testing;
 import Card.Card;
 import Card.CardDeck;
 
-public class Testing {
+public class CardAndCardDeck {
     public static void main(String[] args) {
         CardDeck d = new CardDeck();
         
