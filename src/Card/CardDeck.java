@@ -14,6 +14,8 @@ public class CardDeck {
     HashMap<String, String> hardCards;
     HashMap<String, String> harderCards;
     
+    boolean studying;
+    
     public CardDeck(){
         cards = new HashMap();
         easyCards = new HashMap();
@@ -22,6 +24,7 @@ public class CardDeck {
         easyCardNumber = 6;
         hardCardNumber = 2;
         harderCardNumber = 1;
+        studying = false;
     }
     
     public CardDeck(int easyCardNumber, int hardCardNumber, int harderCardNumber){
@@ -32,7 +35,52 @@ public class CardDeck {
         this.easyCardNumber = easyCardNumber;
         this.hardCardNumber = hardCardNumber;
         this.harderCardNumber = harderCardNumber;
+        studying = false;
     }
+    
+    // when the user wants the program to ask the words
+    public void letsStudying(){
+        studying = true;
+    }
+    
+    // when the user wants the program to stop asking the words
+    public void stopStudying(){
+        studying = false;
+    }
+    
+    /*public void askingWordsFromUser(){
+        int i = easyCardNumber;
+        int j = hardCardNumber;
+        int k = harderCardNumber;
+        
+        while(studying){
+            while(!easyCards.isEmpty() && i > 0){
+            // ask from easyword
+                askingFromEasyWords();
+                --i;
+            }
+            while(!hardCards.isEmpty() && j > 0){
+                // ask from hardcards
+                --j;
+            }
+            while(!harderCards.isEmpty() && k > 0){
+                // ask from harderCards
+                --k;
+            }
+            
+            // if all of the maps are empty then the studying is finished automatically
+            if(easyCards.isEmpty() && hardCards.isEmpty() && harderCards.isEmpty()){
+                studying = false;
+                break;
+            }
+        }
+    }
+    
+    private void askingFromEasyWords(){
+        for(String key : easyCards.keySet()){
+            
+        }
+    }*/
     
     // delete this function
     public void WriteOutEverything(){
@@ -52,7 +100,7 @@ public class CardDeck {
                 easyCards.putAll(cards);
                 WriteOutEasyCards();
             }else{
-                // if
+                // String array is just help to choose cards
                 String[] words = new String[cards.size()];
                 int i = 0;
                 for(String key : cards.keySet()){
@@ -61,8 +109,7 @@ public class CardDeck {
                 }
                 String[] readyWords = new String[easyCardNumber];
                 readyWords = ChooseRandomWords(words);
-                // now i have the different word and I put them into the easy
-                // word[i] == dog
+                // now i have the different words int readyWords and I put them into the easyCards
                 for(int k = 0; k < readyWords.length; ++k){
                     String english = readyWords[k];
                     String hungarian = cards.get(readyWords[k]);
@@ -71,6 +118,7 @@ public class CardDeck {
                 // Delete this function!
                 WriteOutEasyCards();
             }
+        // if there is not enough card, tell user to upload more cards
         }else{
             System.out.println("Sorry, you do not have enough card, please put at least " + easyCardNumber + " cards");
         }
@@ -85,7 +133,7 @@ public class CardDeck {
         }
     }
     
-    // Choose dirrent words
+    // Choose random words, this is just a helper function
     private String[] ChooseRandomWords(String[] words){
         String[] choosenWords = new String[easyCardNumber];
         
