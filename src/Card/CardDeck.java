@@ -193,7 +193,15 @@ public class CardDeck {
     }
     
     // add to hard, harder, easy
-    public void addCardToHarderCards(String englihs, String hungarian){
-        harderCards.put(englihs, hungarian);
+    public void addCardToHarderCards(String english, String hungarian){
+        harderCards.put(english, hungarian);
+    }
+    
+    public void addCardToHardCards(String english, String hungarian){
+        hardCards.put(english, hungarian);
+    }
+    
+    public void addCardToEasyCards(String english, String hungarian){
+        easyCards.put(english, hungarian);
     }
 }
