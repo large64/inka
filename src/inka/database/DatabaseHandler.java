@@ -4,7 +4,10 @@
 */
 package inka.database;
 
+import Card.Card;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +35,8 @@ public class DatabaseHandler {
     }
     
     // @TODO: rewrite function to return with List<Card>
-    public String select(String query) {
+    public List select(String query) {
+        List<Card> results = new ArrayList<>();
         try {
             this.statement = this.c.createStatement();
             // execute query provided by user
@@ -43,9 +47,8 @@ public class DatabaseHandler {
                 String english = resultSet.getString("en");
                 String hungarian = resultSet.getString("hu");
                 
-                System.out.println("id: " + id + " ");
-                System.out.println("en: " + english + " ");
-                System.out.println("hu: " + hungarian + '\n');
+                Card card = new Card(id, english, hungarian);
+                results.add(card);
             }
             resultSet.close();
             this.statement.close();
@@ -53,9 +56,7 @@ public class DatabaseHandler {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
-        
-        // @TODO: return List<Card> object
-        return "";
+        return results;
     }
     
     // Use this function to perform all types of queries, eg. insert, update, delete etc.
