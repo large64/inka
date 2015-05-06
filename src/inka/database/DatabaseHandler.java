@@ -43,9 +43,9 @@ public class DatabaseHandler {
                 String english = resultSet.getString("en");
                 String hungarian = resultSet.getString("hu");
                 
-                System.out.print("id: " + id + " ");
-                System.out.print("en: " + english + " ");
-                System.out.print("hu: " + hungarian);
+                System.out.println("id: " + id + " ");
+                System.out.println("en: " + english + " ");
+                System.out.println("hu: " + hungarian + '\n');
             }
             resultSet.close();
             this.statement.close();
