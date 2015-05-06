@@ -1,8 +1,11 @@
 
 package windows;
 import inka.Inka;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,12 +35,28 @@ public class MainWindow extends JFrame {
         mainMenuJPanel.setLayout(new BoxLayout(mainMenuJPanel, BoxLayout.Y_AXIS));
         addButton("Card Manager", mainMenuJPanel);
         addButton("Ask", mainMenuJPanel);
+        addButton("Grammar", mainMenuJPanel);
         panels.add(mainMenuJPanel);
         
         JPanel testPanel = new JPanel();
         testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.Y_AXIS));
         addButton("Test", testPanel);
         panels.add(testPanel);
+        
+        JPanel grammar = new JPanel();
+        grammar.setLayout(new BorderLayout());
+        JPanel mainGrammar = new JPanel();
+        mainGrammar.setLayout(new BorderLayout());
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        //addButton("Grammar", grammar);
+        //addButton("Menu", buttonPanel);
+        addButton2("Menu", buttonPanel);
+        addButton2("Ask", buttonPanel);
+        addButton2("Card manager", buttonPanel);
+        grammar.add(mainGrammar);
+        grammar.add(buttonPanel, BorderLayout.SOUTH);
+        panels.add(grammar);
         
         // this is the panel for Ask
         CreateAskPanel();
@@ -46,6 +65,10 @@ public class MainWindow extends JFrame {
     private void CreateAskPanel(){
         JPanel askPanel = new JPanel();
         //askPanle.setLayout()
+    }
+    
+    private void createGrammarPanel() {
+        
     }
     
     public void changePanel(int numberOfPanel) {
@@ -64,11 +87,16 @@ public class MainWindow extends JFrame {
         public void actionPerformed(ActionEvent e) {
             String buttonText = e.getActionCommand();
             System.out.println(e.getActionCommand());
-            if (buttonText.equals("Card Manager")) {
+            switch (buttonText) {
+                case "Card Manager":
                     Inka.getWindow().changePanel(1);
-            }
-            else if(buttonText.equals("Ask")){
-                startAskingFromUser();
+                    break;
+                case "Ask":
+                    startAskingFromUser();
+                    break;
+                case "Grammar":
+                    Inka.getWindow().changePanel(2);
+                    break;
             }
         }
         
@@ -85,5 +113,13 @@ public class MainWindow extends JFrame {
         container.add(Box.createVerticalStrut(20));
         container.add(button);
     }
-   
+    
+    private static void addButton2(String text, Container container){
+        JButton button = new JButton(text);
+        button.addActionListener(new MainWindow.changePanelListener());
+        //button.setSize(20, 10);
+        //button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //container.add(Box.createVerticalStrut(20));
+        container.add(button);
+    }
 }
