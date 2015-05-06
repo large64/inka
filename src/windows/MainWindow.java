@@ -45,7 +45,7 @@ public class MainWindow extends JFrame {
         
         //createGrammarPanel();
         GrammarWindow grammarWindow = new GrammarWindow();
-        panels.add(grammarWindow.grammar);
+        panels.add(grammarWindow.mainPanel);
         
         // this is the panel for Ask
         createAskPanel();
