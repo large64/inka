@@ -1,11 +1,11 @@
 
 package windows;
 import inka.Inka;
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+//import java.awt.FlowLayout;
+//import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -43,33 +43,28 @@ public class MainWindow extends JFrame {
         addButton("Test", testPanel);
         panels.add(testPanel);
         
-        JPanel grammar = new JPanel();
-        grammar.setLayout(new BorderLayout());
-        JPanel mainGrammar = new JPanel();
-        mainGrammar.setLayout(new BorderLayout());
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
-        //addButton("Grammar", grammar);
-        //addButton("Menu", buttonPanel);
-        addButton2("Menu", buttonPanel);
-        addButton2("Ask", buttonPanel);
-        addButton2("Card manager", buttonPanel);
-        grammar.add(mainGrammar);
-        grammar.add(buttonPanel, BorderLayout.SOUTH);
-        panels.add(grammar);
+        //createGrammarPanel();
+        GrammarWindow grammarWindow = new GrammarWindow();
+        panels.add(grammarWindow.grammar);
         
         // this is the panel for Ask
-        CreateAskPanel();
+        createAskPanel();
     }
     
-    private void CreateAskPanel(){
+    private void createAskPanel(){
         JPanel askPanel = new JPanel();
         //askPanle.setLayout()
     }
     
-    private void createGrammarPanel() {
+    /*private void createGrammarPanel() {
+        GrammarWindow grammarWindow = new GrammarWindow();
         
-    }
+        addButton2("Menu", grammarWindow.buttonPanel);
+        addButton2("Ask", grammarWindow.buttonPanel);
+        addButton2("Card manager", grammarWindow.buttonPanel);
+        grammarWindow.grammar.add(grammarWindow.buttonPanel, BorderLayout.SOUTH);
+        panels.add(grammarWindow.grammar);
+    }*/
     
     public void changePanel(int numberOfPanel) {
         this.getContentPane().removeAll();
@@ -88,14 +83,20 @@ public class MainWindow extends JFrame {
             String buttonText = e.getActionCommand();
             System.out.println(e.getActionCommand());
             switch (buttonText) {
-                case "Card Manager":
-                    Inka.getWindow().changePanel(1);
-                    break;
+                case "Menu":
+                    Inka.getWindow().changePanel(0);
+                    Inka.getWindow().setTitle(buttonText);
                 case "Ask":
                     startAskingFromUser();
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+                case "Card Manager":
+                    Inka.getWindow().changePanel(1);
+                    Inka.getWindow().setTitle(buttonText);
                     break;
                 case "Grammar":
                     Inka.getWindow().changePanel(2);
+                    Inka.getWindow().setTitle(buttonText);
                     break;
             }
         }
