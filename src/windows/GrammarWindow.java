@@ -32,7 +32,6 @@ public class GrammarWindow extends JFrame {
     private static JLabel jlabel = new JLabel();
     
     //private MainWindow mainWindow;
-        
     
     public GrammarWindow() {
         this.mainPanel.setLayout(new GridLayout());
@@ -48,51 +47,32 @@ public class GrammarWindow extends JFrame {
         createGrammarWindow();
     }
     
-    
-    
     private void createGrammarWindow() {        
-        addButton("Menu", menuPanel, 0);
-        addButton("Ask", menuPanel, 0);
-        addButton("Card manager", menuPanel, 0);
+        addButton("Menu", menuPanel, new changeWindowlListener());
+        addButton("Ask", menuPanel, new changeWindowlListener());
+        addButton("Card manager", menuPanel, new changeWindowlListener());
         
         jlabel.setText("Example sentence, which is ...");
         grammar.add(jlabel);
         
-        addButton("bad", wordPanel, 1);
-        addButton("wrong", wordPanel, 1);
-        addButton("good", wordPanel, 1);
+        addButton("stupido", wordPanel, new wordListener());
+        addButton("wrong", wordPanel, new wordListener());
+        addButton("good", wordPanel, new wordListener());
         
         grammar.add(menuPanel, BorderLayout.NORTH);
         grammar.add(wordPanel, BorderLayout.SOUTH);
         mainPanel.add(grammar);
     }
     
-    //Get text to set button text, container, where to add the button and integer to which listener call
-    private static void addButton(String text, Container container, int whichListener){
+    //Get text to set button text, container, where to add the button and which listener to call
+    private static void addButton(String text, Container container, ActionListener actionListener){
         JButton button = new JButton(text);
-        if (whichListener == 0) {
-            button.addActionListener(new changePanelListener());
-            container.add(button);
-        } else {
-            button.addActionListener(new wordListener());
-            container.add(button);
-        }
-        
+        button.addActionListener(actionListener);
+        container.add(button);        
     }
     
-    private static class wordListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String[] sentence;
-            sentence = jlabel.getText().split("[.]{3}");
-            System.out.println(sentence[0]);
-            String word = e.getActionCommand();
-            jlabel.setText(sentence[0] + word);
-        }
-    }
-    
-    private static class changePanelListener implements ActionListener {
+    //This helps to navigate between the windows
+    private static class changeWindowlListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -115,6 +95,19 @@ public class GrammarWindow extends JFrame {
                     Inka.getWindow().setTitle(buttonText);
                     break;
             }
+        }
+    }
+    
+    //Later will check the solution(correct word) and replace "..." to the choosed word
+    private static class wordListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String[] sentence;
+            sentence = jlabel.getText().split("[.]{3}");
+            System.out.println(sentence[0]);
+            String word = e.getActionCommand();
+            jlabel.setText(sentence[0] + word);
         }
     }
 }
