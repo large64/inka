@@ -85,7 +85,7 @@ public class CardDeck {
                     words[i] = key;
                     ++i;
                 }
-                String[] readyWords = new String[harderCardNumber];
+                String[] readyWords;
                 readyWords = ChooseRandomWords(words);
                 // now i have the different words int readyWords and I put them into the easyCards
                 for(int k = 0; k < readyWords.length; ++k){
