@@ -39,7 +39,7 @@ public class CardDeck {
     }
     
     // when the user wants the program to ask the words
-    public void letsStudying(){
+    public void letsStudy(){
         studying = true;
     }
     
