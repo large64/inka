@@ -51,37 +51,33 @@ public class GrammarWindow extends JFrame {
     
     
     private void createGrammarWindow() {        
-        addButton("Menu", menuPanel);
-        addButton("Ask", menuPanel);
-        addButton("Card manager", menuPanel);
-        //grammar.add(menuPanel, BorderLayout.EAST);
+        addButton("Menu", menuPanel, 0);
+        addButton("Ask", menuPanel, 0);
+        addButton("Card manager", menuPanel, 0);
         
         jlabel.setText("Example sentence, which is ...");
-        //jlabel.setFont(new Font());
         grammar.add(jlabel);
-        //wordPanel.add(jlabel, BorderLayout.CENTER);
         
-        addButton2("bad", wordPanel);
-        addButton2("wrong", wordPanel);
-        addButton2("good", wordPanel);
+        addButton("bad", wordPanel, 1);
+        addButton("wrong", wordPanel, 1);
+        addButton("good", wordPanel, 1);
+        
         grammar.add(menuPanel, BorderLayout.NORTH);
         grammar.add(wordPanel, BorderLayout.SOUTH);
         mainPanel.add(grammar);
+    }
+    
+    //Get text to set button text, container, where to add the button and integer to which listener call
+    private static void addButton(String text, Container container, int whichListener){
+        JButton button = new JButton(text);
+        if (whichListener == 0) {
+            button.addActionListener(new changePanelListener());
+            container.add(button);
+        } else {
+            button.addActionListener(new wordListener());
+            container.add(button);
+        }
         
-        //mainPanel.add(grammar);
-        //panels.add(grammar);
-    }
-    
-    private static void addButton(String text, Container container){
-        JButton button = new JButton(text);
-        button.addActionListener(new changePanelListener());
-        container.add(button);
-    }
-    
-    private static void addButton2(String text, Container container){
-        JButton button = new JButton(text);
-        button.addActionListener(new wordListener());
-        container.add(button);
     }
     
     private static class wordListener implements ActionListener {

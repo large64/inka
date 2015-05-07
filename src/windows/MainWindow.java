@@ -1,11 +1,8 @@
 
 package windows;
 import inka.Inka;
-//import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-//import java.awt.FlowLayout;
-//import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,7 +16,6 @@ import javax.swing.JFrame;
 
 public class MainWindow extends JFrame {
     
-    private final JPanel buttonsPanel = new JPanel();
     private JPanel panel = new JPanel();
     private final static List<JPanel> panels = new ArrayList<>();
     
@@ -43,7 +39,7 @@ public class MainWindow extends JFrame {
         addButton("Test", testPanel);
         panels.add(testPanel);
         
-        //createGrammarPanel();
+        //Grammar window panel
         GrammarWindow grammarWindow = new GrammarWindow();
         panels.add(grammarWindow.mainPanel);
         
@@ -55,16 +51,6 @@ public class MainWindow extends JFrame {
         JPanel askPanel = new JPanel();
         //askPanle.setLayout()
     }
-    
-    /*private void createGrammarPanel() {
-        GrammarWindow grammarWindow = new GrammarWindow();
-        
-        addButton2("Menu", grammarWindow.buttonPanel);
-        addButton2("Ask", grammarWindow.buttonPanel);
-        addButton2("Card manager", grammarWindow.buttonPanel);
-        grammarWindow.grammar.add(grammarWindow.buttonPanel, BorderLayout.SOUTH);
-        panels.add(grammarWindow.grammar);
-    }*/
     
     public void changePanel(int numberOfPanel) {
         this.getContentPane().removeAll();
@@ -100,7 +86,6 @@ public class MainWindow extends JFrame {
                     break;
             }
         }
-        
     }
     
     private static void startAskingFromUser(){
@@ -112,15 +97,6 @@ public class MainWindow extends JFrame {
         button.addActionListener(new MainWindow.changePanelListener());
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         container.add(Box.createVerticalStrut(20));
-        container.add(button);
-    }
-    
-    private static void addButton2(String text, Container container){
-        JButton button = new JButton(text);
-        button.addActionListener(new MainWindow.changePanelListener());
-        //button.setSize(20, 10);
-        //button.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //container.add(Box.createVerticalStrut(20));
         container.add(button);
     }
 }
