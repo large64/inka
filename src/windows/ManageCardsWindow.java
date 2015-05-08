@@ -1,7 +1,6 @@
 package windows;
 
 import Card.Card;
-import com.sun.java.swing.plaf.windows.WindowsBorders;
 import inka.Inka;
 import inka.database.DatabaseHandler;
 import java.awt.Container;
@@ -12,14 +11,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javafx.scene.paint.Color;
+import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicBorders;
@@ -64,11 +62,7 @@ public final class ManageCardsWindow extends JPanel {
         this.getInnerJPanel().setLayout(new BoxLayout(this.getInnerJPanel(), BoxLayout.Y_AXIS));
         this.getInnerJPanel().setBorder(new EmptyBorder(10, 20, 20, 10));
         
-        //Menu panel
-        JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new FlowLayout());
-        menuPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
-        
+        // Title panel
         JPanel titlePanel = new JPanel(new FlowLayout());
         JLabel title = new JLabel("Card manager");
         title.setFont(new Font("Verdana", 1, 20));
@@ -76,10 +70,21 @@ public final class ManageCardsWindow extends JPanel {
         titlePanel.add(title);
         this.add(titlePanel);
         
+        
+        //Menu panel
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new FlowLayout());
+        menuPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
         addButton("Menu", menuPanel, new changeWindowlListener(), "goToMenuButton");
         addButton("Ask", menuPanel, new changeWindowlListener(), "goToAskButton");
         addButton("Grammar", menuPanel, new changeWindowlListener(), "goToGrammarButton");
         this.add(menuPanel);
+        
+        // Add card panel
+        JPanel addCardPanel = new JPanel(new FlowLayout());
+        addCardPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        addButton("Add new card", addCardPanel, null, "addNewCardButton");
+        this.add(addCardPanel);
         
         this.setCards(this.getDatabaseHandler().select("SELECT * FROM cards"));
         
@@ -103,9 +108,13 @@ public final class ManageCardsWindow extends JPanel {
                 cardHolder.setLayout(gridLayout);
 
                 // add ID
+                JPanel idPanel = new JPanel(new FlowLayout());
+                idPanel.setBackground(new Color(221, 221, 221));
+                idPanel.setBorder(new BasicBorders.FieldBorder(Color.WHITE, Color.WHITE, Color.lightGray, Color.lightGray));
                 JLabel idPane = new JLabel();
                 idPane.setText(Integer.toString(cardId));
-                cardHolder.add(idPane);
+                idPanel.add(idPane);
+                cardHolder.add(idPanel);
 
                 // add en, hu
                 JTextField huPane = new JTextField();
@@ -116,6 +125,8 @@ public final class ManageCardsWindow extends JPanel {
                 enPane.setText(enString);    
                 cardHolder.add(enPane);
 
+                JPanel buttonPanel = new JPanel();
+                buttonPanel.setLayout(new FlowLayout());
                 // add action listener to button, this way the clicked button will know
                 // which row to modify in the database
                 saveActionListener saveActionListener =
@@ -125,7 +136,9 @@ public final class ManageCardsWindow extends JPanel {
                                 new WordPair(enPane, huPane)
                         );
                 // add save button
-                addButton("Save", cardHolder, saveActionListener, Integer.toString(cardId));
+                addButton("Save", buttonPanel, saveActionListener, Integer.toString(cardId));
+                addButton("Delete", buttonPanel, saveActionListener, "Delete");
+                cardHolder.add(buttonPanel);
 
                 // add gridLayout to window
                 this.getInnerJPanel().add(cardHolder);
