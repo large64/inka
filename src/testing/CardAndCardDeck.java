@@ -32,7 +32,7 @@ public class CardAndCardDeck {
         d.addCard(c10);
         d.addCard(c11);*/
         
-        d.loadEasyCards();
+        d.loadHarderCards();
         d.WriteOutEverything();
     }
 }
