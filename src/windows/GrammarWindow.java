@@ -7,47 +7,36 @@ package windows;
 
 import inka.Inka;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 
 /**
  *
  * @author me
  */
-public class GrammarWindow extends JFrame {
+public class GrammarWindow extends JPanel {
     
-    JPanel mainPanel = new JPanel();
-    private JPanel grammar = new JPanel();
-    private JPanel menuPanel = new JPanel();
-    private JPanel wordPanel = new JPanel();
-    private static JLabel jlabel = new JLabel();
-    
-    //private MainWindow mainWindow;
+    private static final JLabel jlabel = new JLabel();
     
     public GrammarWindow() {
-        this.mainPanel.setLayout(new GridLayout());
-        this.grammar.setLayout(new BorderLayout());
-        this.menuPanel.setLayout(new FlowLayout());
-        this.wordPanel.setLayout(new FlowLayout());
-        
-        mainPanel.setBorder(new LineBorder(Color.BLACK));
-        grammar.setBorder(new LineBorder(Color.BLACK));
-        menuPanel.setBorder(new LineBorder(Color.BLACK));
-        wordPanel.setBorder(new LineBorder(Color.BLACK));
-        
+        this.setLayout(new GridLayout());
         createGrammarWindow();
     }
     
-    private void createGrammarWindow() {        
+    private void createGrammarWindow() {
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new FlowLayout());
+        JPanel grammar = new JPanel();
+        grammar.setLayout(new BorderLayout());
+        JPanel wordPanel = new JPanel();
+        wordPanel.setLayout(new FlowLayout());
+        
         addButton("Menu", menuPanel, new changeWindowlListener());
         addButton("Ask", menuPanel, new changeWindowlListener());
         addButton("Card manager", menuPanel, new changeWindowlListener());
@@ -61,7 +50,7 @@ public class GrammarWindow extends JFrame {
         
         grammar.add(menuPanel, BorderLayout.NORTH);
         grammar.add(wordPanel, BorderLayout.SOUTH);
-        mainPanel.add(grammar);
+        this.add(grammar);
     }
     
     //Get text to set button text, container, where to add the button and which listener to call
@@ -82,16 +71,17 @@ public class GrammarWindow extends JFrame {
                 case "Menu":
                     Inka.getWindow().changePanel(0);
                     Inka.getWindow().setTitle(buttonText);
-                case "Ask":
-                    //startAskingFromUser();
-                    Inka.getWindow().setTitle(buttonText);
                     break;
-                case "Card Manager":
+                case "Ask":
                     Inka.getWindow().changePanel(1);
                     Inka.getWindow().setTitle(buttonText);
                     break;
                 case "Grammar":
                     Inka.getWindow().changePanel(2);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+                case "Card manager":
+                    Inka.getWindow().changePanel(3);
                     Inka.getWindow().setTitle(buttonText);
                     break;
             }

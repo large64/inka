@@ -5,21 +5,17 @@ import Card.CardDeck;
 import inka.Inka;
 import inka.database.DatabaseHandler;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -44,16 +40,31 @@ public class AskingWindow extends JPanel{
 
     // set the panels and the buttons
     private void SetPanelsAndButtons() {
+        this.setLayout(new BorderLayout());
         buttonPanel.setLayout(new BorderLayout());
         choosenButtonsPanel.setLayout(new FlowLayout());
         textFieldPanel.setLayout(new BorderLayout());
         textFieldPanel.setPreferredSize(new Dimension(300,100));
+        
+        //Create menu panel with three menu button
+        JPanel menuPanel = new JPanel();
+        menuPanel.setLayout(new FlowLayout());
+        
+        addButton2("Menu", menuPanel, new changeWindowlListener());
+        addButton2("Grammar", menuPanel, new changeWindowlListener());
+        addButton2("Card manager", menuPanel, new changeWindowlListener());
+        
+        this.add(menuPanel, BorderLayout.NORTH);
         
         SetTextFieldsAndProperties();
         
         this.add(Box.createVerticalStrut(300));
         textFieldPanel.add(englishText, BorderLayout.NORTH);
         textFieldPanel.add(hungarianText, BorderLayout.SOUTH);
+        textFieldPanel.setBorder(new EmptyBorder(50, 0, 0, 0));
+        
+        //set the main panel borders
+        this.setBorder(new EmptyBorder(10, 50, 50, 50));
         
         addButton(":(", choosenButtonsPanel);
         addButton("OK", choosenButtonsPanel);
@@ -139,5 +150,37 @@ public class AskingWindow extends JPanel{
         this.databaseHandler = databaseHandler;
     }
     
+    private static void addButton2(String text, Container container, ActionListener actionListener){
+        JButton button = new JButton(text);
+        button.addActionListener(actionListener);
+        container.add(button);        
+    }
     
+    //This helps to navigate between the windows
+    private static class changeWindowlListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String buttonText = e.getActionCommand();
+            System.out.println(e.getActionCommand());
+            switch (buttonText) {
+                case "Menu":
+                    Inka.getWindow().changePanel(0);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+                case "Ask":
+                    Inka.getWindow().changePanel(1);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+                case "Grammar":
+                    Inka.getWindow().changePanel(2);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+                case "Card manager":
+                    Inka.getWindow().changePanel(3);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
+            }
+        }
+    }
 }
