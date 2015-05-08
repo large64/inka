@@ -9,7 +9,7 @@ package sentence;
  *
  * @author me
  */
-public class Sentence {
+public class Grammar {
     
     private int id;
     private String sentence;
@@ -18,7 +18,7 @@ public class Sentence {
     private String opt3;
     private int correct;
     
-    public Sentence(int id, String sentence, String opt1, String opt2, String opt3, int correct) {
+    public Grammar(int id, String sentence, String opt1, String opt2, String opt3, int correct) {
         this.id = id;
         this.sentence = sentence;
         this.opt1 = opt1;
