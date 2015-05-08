@@ -29,27 +29,19 @@ public class MainWindow extends JFrame {
         // Main menu panel
         JPanel mainMenuJPanel = new JPanel();
         mainMenuJPanel.setLayout(new BoxLayout(mainMenuJPanel, BoxLayout.Y_AXIS));
-        addButton("Card Manager", mainMenuJPanel);
         addButton("Ask", mainMenuJPanel);
         addButton("Grammar", mainMenuJPanel);
+        addButton("Card Manager", mainMenuJPanel);
         panels.add(mainMenuJPanel);
         
-        JPanel testPanel = new JPanel();
-        testPanel.setLayout(new BoxLayout(testPanel, BoxLayout.Y_AXIS));
-        addButton("Test", testPanel);
-        panels.add(testPanel);
+        //Asking window panel
+        panels.add(new AskingWindow());        
         
         //Grammar window panel
-        GrammarWindow grammarWindow = new GrammarWindow();
-        panels.add(grammarWindow.mainPanel);
+        panels.add(new GrammarWindow());
         
-        // this is the panel for Ask
-        createAskPanel();
-    }
-    
-    private void createAskPanel(){
-        JPanel askPanel = new JPanel();
-        //askPanle.setLayout()
+        //Card manager window panel
+        panels.add(new ManageCardsWindow());
     }
     
     public void changePanel(int numberOfPanel) {
@@ -72,11 +64,8 @@ public class MainWindow extends JFrame {
                 case "Menu":
                     Inka.getWindow().changePanel(0);
                     Inka.getWindow().setTitle(buttonText);
-                case "Ask":
-                    startAskingFromUser();
-                    Inka.getWindow().setTitle(buttonText);
                     break;
-                case "Card Manager":
+                case "Ask":
                     Inka.getWindow().changePanel(1);
                     Inka.getWindow().setTitle(buttonText);
                     break;
@@ -84,12 +73,12 @@ public class MainWindow extends JFrame {
                     Inka.getWindow().changePanel(2);
                     Inka.getWindow().setTitle(buttonText);
                     break;
+                case "Card Manager":
+                    Inka.getWindow().changePanel(3);
+                    Inka.getWindow().setTitle(buttonText);
+                    break;
             }
         }
-    }
-    
-    private static void startAskingFromUser(){
-        
     }
     
     private static void addButton(String text, Container container){
