@@ -364,7 +364,7 @@ public class AskingWindow extends JPanel{
     // load all the card from database
     private void loadCardsFromDatabase()
     {
-        this.setCards(this.getDatabaseHandler().select("SELECT * FROM cards"));
+        this.setCards(this.getDatabaseHandler().selectCards("SELECT * FROM cards"));
     }
     
     // put cards from list into hasmap

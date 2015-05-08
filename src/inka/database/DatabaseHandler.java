@@ -34,7 +34,7 @@ public class DatabaseHandler {
         System.out.println("Database connection opened successfully.");
     }
     
-    public List select(String query) {
+    public List selectCards(String query) {
         List<Card> results = new ArrayList<>();
         try {
             this.statement = this.c.createStatement();
