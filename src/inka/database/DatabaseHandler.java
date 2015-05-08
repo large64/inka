@@ -34,7 +34,6 @@ public class DatabaseHandler {
         System.out.println("Database connection opened successfully.");
     }
     
-    // @TODO: rewrite function to return with List<Card>
     public List select(String query) {
         List<Card> results = new ArrayList<>();
         try {
