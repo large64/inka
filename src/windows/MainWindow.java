@@ -1,8 +1,10 @@
 
 package windows;
+import windows.cardManager.ManageCardsWindow;
 import inka.Inka;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class MainWindow extends JFrame {
@@ -25,13 +28,20 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        // Create panels that represents states and layouts of the only one window we have.
+        // Create panels that represents states and layouts of the only one window we have.        
         // Main menu panel
         JPanel mainMenuJPanel = new JPanel();
-        mainMenuJPanel.setLayout(new BoxLayout(mainMenuJPanel, BoxLayout.Y_AXIS));
+        mainMenuJPanel.setLayout(new BoxLayout(mainMenuJPanel, BoxLayout.Y_AXIS));        
+        
+        JLabel title = new JLabel("Inka");
+        title.setFont(new Font("Verdana", 1, 30));
+        title.setAlignmentX(CENTER_ALIGNMENT);
+        mainMenuJPanel.add(title);
+        
         addButton("Ask", mainMenuJPanel);
         addButton("Grammar", mainMenuJPanel);
         addButton("Card Manager", mainMenuJPanel);
+        
         panels.add(mainMenuJPanel);
         
         //Asking window panel
