@@ -93,7 +93,7 @@ public final class ManageCardsWindow extends JPanel {
         
         // Title panel
         JPanel titlePanel = new JPanel(new FlowLayout());
-        JLabel title = new JLabel("Card manager");
+        JLabel title = new JLabel("Card Manager");
         title.setFont(new Font("Verdana", 1, 20));
         title.setBorder(new EmptyBorder(10, 10, 10, 10));
         titlePanel.add(title);

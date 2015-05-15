@@ -191,7 +191,7 @@ public class AskingWindow extends JPanel{
         
         addButton2("Menu", menuPanel, new changeWindowlListener());
         addButton2("Grammar", menuPanel, new changeWindowlListener());
-        addButton2("Card manager", menuPanel, new changeWindowlListener());
+        addButton2("Card Manager", menuPanel, new changeWindowlListener());
         
         this.add(menuPanel, BorderLayout.NORTH);
         
@@ -429,7 +429,7 @@ public class AskingWindow extends JPanel{
                     Inka.getWindow().changePanel(2);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
-                case "Card manager":
+                case "Card Manager":
                     Inka.getWindow().changePanel(3);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
