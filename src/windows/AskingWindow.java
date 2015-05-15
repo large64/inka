@@ -364,7 +364,7 @@ public class AskingWindow extends JPanel{
     // load all the card from database
     private void loadCardsFromDatabase()
     {
-        this.setCards(this.getDatabaseHandler().select("SELECT * FROM cards"));
+        this.setCards(this.getDatabaseHandler().selectCards("SELECT * FROM cards"));
     }
     
     // put cards from list into hasmap
@@ -421,19 +421,19 @@ public class AskingWindow extends JPanel{
             switch (buttonText) {
                 case "Menu":
                     Inka.getWindow().changePanel(0);
-                    Inka.getWindow().setTitle(buttonText);
+                    Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
                 case "Ask":
                     Inka.getWindow().changePanel(1);
-                    Inka.getWindow().setTitle(buttonText);
+                    Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
                 case "Grammar":
                     Inka.getWindow().changePanel(2);
-                    Inka.getWindow().setTitle(buttonText);
+                    Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
                 case "Card manager":
                     Inka.getWindow().changePanel(3);
-                    Inka.getWindow().setTitle(buttonText);
+                    Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
             }
         }

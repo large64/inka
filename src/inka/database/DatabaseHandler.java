@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sentence.Grammar;
 
 /**
  *
@@ -34,8 +35,7 @@ public class DatabaseHandler {
         System.out.println("Database connection opened successfully.");
     }
     
-    // @TODO: rewrite function to return with List<Card>
-    public List select(String query) {
+    public List selectCards(String query) {
         List<Card> results = new ArrayList<>();
         try {
             this.statement = this.c.createStatement();
@@ -49,6 +49,33 @@ public class DatabaseHandler {
                 
                 Card card = new Card(id, english, hungarian);
                 results.add(card);
+            }
+            resultSet.close();
+            this.statement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+        }
+        return results;
+    }
+    
+    public List selectGrammar(String query) {
+        List<Grammar> results = new ArrayList<>();
+        try {
+            this.statement = this.c.createStatement();
+            // execute query provided by user
+            ResultSet resultSet = this.statement.executeQuery(query);
+            
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String sentence = resultSet.getString("sentence");
+                String opt1 = resultSet.getString("opt1");
+                String opt2 = resultSet.getString("opt2");
+                String opt3 = resultSet.getString("opt3");
+                int correct = resultSet.getInt("correct");
+                
+                Grammar grammar = new Grammar(id, sentence, opt1, opt2, opt3, correct);
+                results.add(grammar);
             }
             resultSet.close();
             this.statement.close();
