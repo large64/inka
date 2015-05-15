@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
                     Inka.getWindow().changePanel(2);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
-                case "Card manager":
+                case "Card Manager":
                     Inka.getWindow().changePanel(3);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
