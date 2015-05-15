@@ -49,6 +49,7 @@ public class AskingWindow extends JPanel{
      static JButton buttonHard;
      static JButton buttonEasy;
      static JButton buttonShow;
+     static JButton buttonAgain;
     
      // set the window - panels and buttons
      // load all the cards from database
@@ -68,6 +69,7 @@ public class AskingWindow extends JPanel{
         k = cardDeck.getEasyCardNumber();
         status = 0;
         step = 0;
+        buttonAgain.setEnabled(false);
         progressOfAsking();
     }
     
@@ -116,6 +118,7 @@ public class AskingWindow extends JPanel{
             writeToHunTextField("");
         }
         else{
+            buttonAgain.setEnabled(true);
             setShowButtonActivitation(false);
             setAskingButtonsActivitation(false);
         }
@@ -204,31 +207,58 @@ public class AskingWindow extends JPanel{
         HardButtonListener hardButtonListener = new HardButtonListener();
         EasyButtonListener easyButtonListener = new EasyButtonListener();
         ShowButtonListener showButtonListener = new ShowButtonListener();
+        AgainButtonListener againButtonListener = new AgainButtonListener();
         
         /*addButton2(":(", choosenButtonsPanel, harderButtonListener);
         addButton2("OK", choosenButtonsPanel, hardButtonListener);
         addButton2(":)", choosenButtonsPanel, easyButtonListener);
         addButton2("Show", choosenButtonsPanel, showButtonListener);*/
+        
         buttonHarder = new JButton(":(");
         buttonHard = new JButton("OK");
         buttonEasy = new JButton(":)");
         buttonShow = new JButton("Show");
+        buttonAgain = new JButton("Again");
         
         buttonHarder.addActionListener(harderButtonListener);
         buttonHard.addActionListener(hardButtonListener);
         buttonEasy.addActionListener(easyButtonListener);
         buttonShow.addActionListener(showButtonListener);
+        buttonAgain.addActionListener(againButtonListener);
         
         choosenButtonsPanel.add(buttonHarder);
         choosenButtonsPanel.add(buttonHard);
         choosenButtonsPanel.add(buttonEasy);
         choosenButtonsPanel.add(buttonShow);
+        choosenButtonsPanel.add(buttonAgain);
         
         
         buttonPanel.add(Box.createVerticalStrut(70));
         buttonPanel.add(textFieldPanel, BorderLayout.NORTH);
         buttonPanel.add(choosenButtonsPanel, BorderLayout.SOUTH);
         this.add(buttonPanel);
+    }
+    
+    private  class AgainButtonListener implements ActionListener{
+        
+        @Override
+        public void actionPerformed(ActionEvent e){
+            setDatabaseHandler(new DatabaseHandler());
+            loadCardsFromDatabase();
+            loadCardsFromListIntoHashMap();
+            // put everything inot harder cards and write out 
+            cardDeck.loadHarderCards();
+            cardDeck.letsStudy();
+            i = cardDeck.getHarderCardNumber();
+            j = cardDeck.getHardCarNumber();
+            k = cardDeck.getEasyCardNumber();
+            status = 0;
+            step = 0;
+            buttonAgain.setEnabled(false);
+            setShowButtonActivitation(true);
+            setAskingButtonsActivitation(true);
+            progressOfAsking();
+        }
     }
     
     private static class ShowButtonListener implements ActionListener{
