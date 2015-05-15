@@ -34,6 +34,24 @@ public final class ManageCardsWindow extends JPanel {
     private static DatabaseHandler databaseHandler;
     private static JPanel innerJPanel;
     private static JScrollPane jScrollPane;
+    private static JPanel menuPanel;
+    private static JPanel addCardPanel;
+
+    public static JPanel getAddCardPanel() {
+        return addCardPanel;
+    }
+
+    public static void setAddCardPanel(JPanel addCardPanel) {
+        ManageCardsWindow.addCardPanel = addCardPanel;
+    }
+
+    public static JPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    public static void setMenuPanel(JPanel menuPanel) {
+        ManageCardsWindow.menuPanel = menuPanel;
+    }
 
     public static JScrollPane getjScrollPane() {
         return jScrollPane;
@@ -84,13 +102,13 @@ public final class ManageCardsWindow extends JPanel {
         
         
         //Menu panel
-        JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new FlowLayout());
-        menuPanel.setBorder(new EmptyBorder(0, 0, 20, 0));
-        addButton("Menu", menuPanel, new ChangeWindowListener(), "goToMenuButton");
-        addButton("Ask", menuPanel, new ChangeWindowListener(), "goToAskButton");
-        addButton("Grammar", menuPanel, new ChangeWindowListener(), "goToGrammarButton");
-        this.add(menuPanel);
+        setMenuPanel(new JPanel());
+        getMenuPanel().setLayout(new FlowLayout());
+        getMenuPanel().setBorder(new EmptyBorder(0, 0, 20, 0));
+        addButton("Menu", getMenuPanel(), new ChangeWindowListener(), "goToMenuButton");
+        addButton("Ask", getMenuPanel(), new ChangeWindowListener(), "goToAskButton");
+        addButton("Grammar", getMenuPanel(), new ChangeWindowListener(), "goToGrammarButton");
+        this.add(getMenuPanel());
         
         // Add card panel
         // ActionListener for addNewCardButton
@@ -101,10 +119,10 @@ public final class ManageCardsWindow extends JPanel {
             }
         }
         
-        JPanel addCardPanel = new JPanel(new FlowLayout());
-        addCardPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
-        addButton("Add new card", addCardPanel, new NewCardListener(), "addNewCardButton");
-        this.add(addCardPanel);
+        setAddCardPanel(new JPanel(new FlowLayout()));
+        getAddCardPanel().setBorder(new EmptyBorder(0, 0, 10, 0));
+        addButton("Add new card", getAddCardPanel(), new NewCardListener(), "addNewCardButton");
+        this.add(getAddCardPanel());
         
         ManageCardsWindow.getInnerJPanel().setBorder(new BasicBorders.MarginBorder());
         ManageCardsWindow.setjScrollPane(new JScrollPane(ManageCardsWindow.getInnerJPanel()));
@@ -119,9 +137,14 @@ public final class ManageCardsWindow extends JPanel {
         
         // When user clicks on new card button, show this panel
         if (showAddCardPanel == true) {
+            getMenuPanel().setVisible(false);
+            getAddCardPanel().setVisible(false);
+            
             GridLayout addCardGrid = new GridLayout(2, 4);
             addCardGrid.setHgap(20);
-            JPanel addCardPanel = new JPanel(addCardGrid);
+            JPanel innerAddCardPanel = new JPanel(addCardGrid);
+            
+            ManageCardsWindow.getInnerJPanel().setBorder(new EmptyBorder(0, 0, 200, 0));
             ManageCardsWindow.getjScrollPane().setBorder(new EmptyBorder(10, 10, 10, 10));
             ManageCardsWindow.getjScrollPane().setSize(new Dimension(800, 120));
             
@@ -134,13 +157,13 @@ public final class ManageCardsWindow extends JPanel {
             JTextField enTextField = new JTextField();
             JTextField huTextField = new JTextField();
             
-            addCardPanel.add(enLabel);
-            addCardPanel.add(huLabel);
+            innerAddCardPanel.add(enLabel);
+            innerAddCardPanel.add(huLabel);
             // add empty label to keep grid layout consistent
-            addCardPanel.add(new JLabel());
-            addCardPanel.add(new JLabel());
-            addCardPanel.add(enTextField);
-            addCardPanel.add(huTextField);
+            innerAddCardPanel.add(new JLabel());
+            innerAddCardPanel.add(new JLabel());
+            innerAddCardPanel.add(enTextField);
+            innerAddCardPanel.add(huTextField);
             
             SaveNewCardListener newCardListener = new SaveNewCardListener(enTextField, huTextField, databaseHandler);
             class CancelAddCardListener implements ActionListener {
@@ -150,17 +173,22 @@ public final class ManageCardsWindow extends JPanel {
                 }
             }
             
-            ManageCardsWindow.addButton("Save new card", addCardPanel, newCardListener, "saveCardButton");
-            ManageCardsWindow.addButton("Cancel", addCardPanel, new CancelAddCardListener(), "cancelAddCardButton");
+            ManageCardsWindow.addButton("Save new card", innerAddCardPanel, newCardListener, "saveCardButton");
+            ManageCardsWindow.addButton("Cancel", innerAddCardPanel, new CancelAddCardListener(), "cancelAddCardButton");
             
             ManageCardsWindow.getInnerJPanel().add(subTitle);
-            ManageCardsWindow.getInnerJPanel().add(addCardPanel);
+            ManageCardsWindow.getInnerJPanel().add(innerAddCardPanel);
         }
         else {
             // Put cards into memory
             ManageCardsWindow.setCards(ManageCardsWindow.getDatabaseHandler().select("SELECT * FROM cards"));
             ManageCardsWindow.getjScrollPane().setSize(new Dimension(800, 445));
-            ManageCardsWindow.getjScrollPane().setBorder(new EmptyBorder(0, 0, 0, 0));
+            ManageCardsWindow.getjScrollPane().setBorder(new EmptyBorder(0, 0, 10, 0));
+            
+            //getMenuPanel().removeAll();
+            getMenuPanel().setVisible(true);
+            getAddCardPanel().setVisible(true);
+            ManageCardsWindow.getInnerJPanel().setBorder(new EmptyBorder(0, 0, 0, 0));
 
             if (ManageCardsWindow.getCards().isEmpty()) {
                 JLabel noCards = new JLabel("No cards yet.");

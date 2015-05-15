@@ -1,8 +1,10 @@
 package windows.cardManager.actionListeners;
 
+import Card.Card;
 import inka.database.DatabaseHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import windows.cardManager.ManageCardsWindow;
@@ -51,15 +53,20 @@ public final class SaveNewCardListener implements ActionListener {
         String enMeaningString = this.getEnMeaning().getText();
         String huMeaningString = this.getHuMeaning().getText();
         
-        if (!enMeaningString.equals("") && !huMeaningString.equals("")) {
+        if ((!enMeaningString.equals("") && !huMeaningString.equals("")) && !cardAlreadyExists()) {
             String[] queries = {"INSERT INTO cards ('en', 'hu') VALUES ('" + this.getEnMeaning().getText() + "', '" + this.getHuMeaning().getText() + "');"};
             this.getDatabaseHandler().query(queries);
-            System.out.println(queries[0]);
             ManageCardsWindow.paintWindow(false);
         }
         else {
-            JOptionPane.showMessageDialog(ManageCardsWindow.getInnerJPanel(), "None of the fields can be empty.");
+            JOptionPane.showMessageDialog(ManageCardsWindow.getInnerJPanel(), "None of the fields can be empty, no duplicates allowed.");
         }
     }
     
+    private boolean cardAlreadyExists() {
+        ArrayList<Card> enDuplicates = new ArrayList<>(this.getDatabaseHandler().select("SELECT * FROM cards WHERE en='" + this.getEnMeaning().getText() + "';"));
+        ArrayList<Card> huDuplicates = new ArrayList<>(this.getDatabaseHandler().select("SELECT * FROM cards WHERE hu='" + this.getHuMeaning().getText() + "';"));
+        
+        return (!enDuplicates.isEmpty() || !huDuplicates.isEmpty());
+    }
 }
