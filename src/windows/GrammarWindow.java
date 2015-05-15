@@ -29,7 +29,7 @@ public final class GrammarWindow extends JPanel {
     
     private static final JLabel jlabel = new JLabel();
     private DatabaseHandler dataBaseHandler;
-    private List<Grammar> grammarList;
+    private static List<Grammar> grammarList;
 
     public GrammarWindow() {
         this.setLayout(new GridLayout());
@@ -46,23 +46,10 @@ public final class GrammarWindow extends JPanel {
         JPanel wordPanel = new JPanel();
         wordPanel.setLayout(new FlowLayout());
         
-        addButton("Menu", menuPanel, new changeWindowlListener(), "Menu");
-        addButton("Ask", menuPanel, new changeWindowlListener(), "Ask");
-        addButton("Card manager", menuPanel, new changeWindowlListener(), "Card manager");
+        createMenuPanel(menuPanel);
         
         refreshGrammarExcercise(wordPanel, grammar);
-        /*
-        Random random = new Random();
-        int position = random.nextInt(grammarList.size());
         
-        jlabel.setText(grammarList.get(position).getSentence());
-        grammar.add(jlabel);
-        
-        addButton(grammarList.get(position).getOpt1(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "0");
-        addButton(grammarList.get(position).getOpt2(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "1");
-        addButton(grammarList.get(position).getOpt3(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "2");
-        addButton("Next", wordPanel, new nextSentenceListener("Next"), "Next");
-        */
         grammar.add(menuPanel, BorderLayout.NORTH);
         grammar.add(wordPanel, BorderLayout.SOUTH);
         this.add(grammar);
@@ -76,17 +63,26 @@ public final class GrammarWindow extends JPanel {
         container.add(button);        
     }
     
-    private void refreshGrammarExcercise(JPanel wordPanel, JPanel grammar) {
+    private static void refreshGrammarExcercise(JPanel wordPanel, JPanel grammar) {
         Random random = new Random();
         int position = random.nextInt(grammarList.size());
         
         jlabel.setText(grammarList.get(position).getSentence());
         grammar.add(jlabel);
-        
+        wordPanel.removeAll();
         addButton(grammarList.get(position).getOpt1(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "0");
         addButton(grammarList.get(position).getOpt2(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "1");
         addButton(grammarList.get(position).getOpt3(), wordPanel, new wordListener(wordPanel, grammarList.get(position)), "2");
-        addButton("Next", wordPanel, new nextSentenceListener("Next", wordPanel, grammarList.get(position)), "Next");
+        addButton("Next", wordPanel, new nextSentenceListener("Next", wordPanel, grammar, grammarList.get(position)), "Next");
+        
+        wordPanel.validate();
+        wordPanel.repaint();
+    }
+    
+    public void createMenuPanel(JPanel menuPanel) {
+        addButton("Menu", menuPanel, new changeWindowlListener(), "Menu");
+        addButton("Ask", menuPanel, new changeWindowlListener(), "Ask");
+        addButton("Card manager", menuPanel, new changeWindowlListener(), "Card manager");
     }
     
     public DatabaseHandler getDataBaseHandler() {
@@ -162,23 +158,21 @@ public final class GrammarWindow extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {          
             String[] sentence;
-            /*sentence = jlabel.getText().split("[.]{3}");
-            System.out.println(sentence[0]);
-            String word = e.getActionCommand();
-            //jlabel.setText(sentence[0] + word + sentence[1]);
-            jlabel.setText(sentence[0] + word);*/
-            
-            for (int i = 0; i < getWordPanel().getComponentCount(); ++i) {
-                if (getWordPanel().getComponent(i).getName().equals(Integer.toString(getGrammar().getCorrect()))) {
-                    sentence = jlabel.getText().split("[.]{3}");
-                    System.out.println(sentence[0]);
-                    String word = e.getActionCommand();
-                    jlabel.setText(sentence[0] + word + sentence[1]);
-                    getWordPanel().getComponent(i).setBackground(Color.green);
-                } else {
-                    getWordPanel().getComponent(i).setBackground(Color.red);
+            try {
+                for (int i = 0; i < getWordPanel().getComponentCount(); ++i) {
+                    if (getWordPanel().getComponent(i).getName().equals(Integer.toString(getGrammar().getCorrect()))) {
+                        sentence = jlabel.getText().split("[.]{3}");
+                        String word = e.getActionCommand();
+                        jlabel.setText(sentence[0] + word + sentence[1]);
+                        getWordPanel().getComponent(i).setBackground(Color.green);
+                    } else {
+                        getWordPanel().getComponent(i).setBackground(Color.red);
+                        getWordPanel().getComponent(3).setBackground(Color.cyan);
+                    }
                 }
+            } catch (Exception ex) {
             }
+            
         }
     }
     
@@ -186,6 +180,7 @@ public final class GrammarWindow extends JPanel {
         
         String buttonName;
         JPanel wordPanel;
+        JPanel grammarPanel;
         Grammar grammar; 
 
         public JPanel getWordPanel() {
@@ -194,6 +189,14 @@ public final class GrammarWindow extends JPanel {
 
         public void setWordPanel(JPanel wordPanel) {
             this.wordPanel = wordPanel;
+        }
+
+        public JPanel getGrammarPanel() {
+            return grammarPanel;
+        }
+
+        public void setGrammarPanel(JPanel grammarPanel) {
+            this.grammarPanel = grammarPanel;
         }
 
         public Grammar getGrammar() {
@@ -212,15 +215,16 @@ public final class GrammarWindow extends JPanel {
             this.buttonName = buttonName;
         }
         
-        public nextSentenceListener(String buttonName, JPanel wordPanel, Grammar grammar) {
+        public nextSentenceListener(String buttonName, JPanel wordPanel, JPanel grammarPanel, Grammar grammar) {
             this.setButtonName(buttonName);
             this.setWordPanel(wordPanel);
+            this.setGrammarPanel(grammarPanel);
             this.setGrammar(grammar);
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //refreshGrammarExcercise(getWordPanel(), getGrammar());
+            refreshGrammarExcercise(getWordPanel(), getGrammarPanel());
         }
     }
 }

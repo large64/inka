@@ -69,7 +69,6 @@ public class MainWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String buttonText = e.getActionCommand();
-            System.out.println(e.getActionCommand());
             switch (buttonText) {
                 case "Menu":
                     Inka.getWindow().changePanel(0);
