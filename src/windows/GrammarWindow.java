@@ -33,8 +33,7 @@ public final class GrammarWindow extends JPanel {
 
     public GrammarWindow() {
         this.setLayout(new GridLayout());
-        this.setDataBaseHandler(new DatabaseHandler());
-        this.setGrammarList(this.getDataBaseHandler().selectGrammar("SELECT * FROM grammar"));
+        this.setGrammarList(DatabaseHandler.selectGrammar("SELECT * FROM grammar"));
         createGrammarWindow();
     }
     
@@ -82,7 +81,7 @@ public final class GrammarWindow extends JPanel {
     public void createMenuPanel(JPanel menuPanel) {
         addButton("Menu", menuPanel, new changeWindowlListener(), "Menu");
         addButton("Ask", menuPanel, new changeWindowlListener(), "Ask");
-        addButton("Card manager", menuPanel, new changeWindowlListener(), "Card manager");
+        addButton("Card Manager", menuPanel, new changeWindowlListener(), "Card Manager");
     }
     
     public DatabaseHandler getDataBaseHandler() {

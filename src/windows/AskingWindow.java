@@ -56,7 +56,6 @@ public class AskingWindow extends JPanel{
         SetPanelsAndButtons();
         cardDeck = new CardDeck();
         // load cards from database and convert to hashmap
-        setDatabaseHandler(new DatabaseHandler());
         loadCardsFromDatabase();
         loadCardsFromListIntoHashMap();
         // put everything inot harder cards and write out 
@@ -192,7 +191,7 @@ public class AskingWindow extends JPanel{
         
         addButton2("Menu", menuPanel, new changeWindowlListener());
         addButton2("Grammar", menuPanel, new changeWindowlListener());
-        addButton2("Card manager", menuPanel, new changeWindowlListener());
+        addButton2("Card Manager", menuPanel, new changeWindowlListener());
         
         this.add(menuPanel, BorderLayout.NORTH);
         
@@ -241,7 +240,6 @@ public class AskingWindow extends JPanel{
         
         @Override
         public void actionPerformed(ActionEvent e){
-            setDatabaseHandler(new DatabaseHandler());
             loadCardsFromDatabase();
             loadCardsFromListIntoHashMap();
             // put everything inot harder cards and write out 
@@ -364,7 +362,7 @@ public class AskingWindow extends JPanel{
     // load all the card from database
     private void loadCardsFromDatabase()
     {
-        this.setCards(this.getDatabaseHandler().selectCards("SELECT * FROM cards"));
+        this.setCards(DatabaseHandler.selectCards("SELECT * FROM cards"));
     }
     
     // put cards from list into hasmap
@@ -431,7 +429,7 @@ public class AskingWindow extends JPanel{
                     Inka.getWindow().changePanel(2);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;
-                case "Card manager":
+                case "Card Manager":
                     Inka.getWindow().changePanel(3);
                     Inka.getWindow().setTitle("Inka - " + buttonText);
                     break;

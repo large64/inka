@@ -55,7 +55,7 @@ public final class SaveNewCardListener implements ActionListener {
         
         if ((!enMeaningString.equals("") && !huMeaningString.equals("")) && !cardAlreadyExists()) {
             String[] queries = {"INSERT INTO cards ('en', 'hu') VALUES ('" + this.getEnMeaning().getText() + "', '" + this.getHuMeaning().getText() + "');"};
-            this.getDatabaseHandler().query(queries);
+            DatabaseHandler.query(queries);
             ManageCardsWindow.paintWindow(false);
         }
         else {
@@ -64,8 +64,8 @@ public final class SaveNewCardListener implements ActionListener {
     }
     
     private boolean cardAlreadyExists() {
-        ArrayList<Card> enDuplicates = new ArrayList<>(this.getDatabaseHandler().selectCards("SELECT * FROM cards WHERE en='" + this.getEnMeaning().getText() + "';"));
-        ArrayList<Card> huDuplicates = new ArrayList<>(this.getDatabaseHandler().selectCards("SELECT * FROM cards WHERE hu='" + this.getHuMeaning().getText() + "';"));
+        ArrayList<Card> enDuplicates = new ArrayList<>(DatabaseHandler.selectCards("SELECT * FROM cards WHERE en='" + this.getEnMeaning().getText() + "';"));
+        ArrayList<Card> huDuplicates = new ArrayList<>(DatabaseHandler.selectCards("SELECT * FROM cards WHERE hu='" + this.getHuMeaning().getText() + "';"));
         
         return (!enDuplicates.isEmpty() || !huDuplicates.isEmpty());
     }

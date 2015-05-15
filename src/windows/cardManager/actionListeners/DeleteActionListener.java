@@ -37,7 +37,7 @@ public final class DeleteActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String[] queries = {"DELETE FROM cards WHERE id='" + this.getId() + "';"};
-        this.getDatabaseHandler1().query(queries);
+        DatabaseHandler.query(queries);
         ManageCardsWindow.paintWindow(false);
     }
 }

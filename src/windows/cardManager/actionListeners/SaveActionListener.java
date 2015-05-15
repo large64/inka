@@ -55,17 +55,17 @@ public final class SaveActionListener implements ActionListener {
         // if both en and hu have been modified
         if (!oldEnString.equals(newEnString) && !oldHuString.equals(newHuString)) {
             String[] queryStrings = {"UPDATE cards set en='" + newEnString + "', hu='" + newHuString + "' WHERE hu='" + oldHuString + "' AND en='" + oldEnString + "';"};
-            this.getDatabaseHandler1().query(queryStrings);
+            DatabaseHandler.query(queryStrings);
         }
         // if only en have been modified
         else if (!oldEnString.equals(newEnString) && oldHuString.equals(oldHuString)) {
             String[] queryStrings = {"UPDATE cards set en='" + newEnString + "' WHERE en='" + oldEnString + "';"};
-            this.getDatabaseHandler1().query(queryStrings);
+            DatabaseHandler.query(queryStrings);
         }
         // if only hu have been modified
         else if (!oldHuString.equals(newHuString) && oldEnString.equals(oldEnString)) {
             String[] queryStrings = {"UPDATE cards set hu='" + newHuString + "' WHERE hu='" + oldHuString + "';"};
-            this.getDatabaseHandler1().query(queryStrings);
+            DatabaseHandler.query(queryStrings);
         }
     }
 }

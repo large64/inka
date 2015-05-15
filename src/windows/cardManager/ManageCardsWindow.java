@@ -87,14 +87,13 @@ public final class ManageCardsWindow extends JPanel {
     
     public ManageCardsWindow() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        ManageCardsWindow.setDatabaseHandler(new DatabaseHandler());
         ManageCardsWindow.setInnerJPanel(new JPanel());
         ManageCardsWindow.getInnerJPanel().setLayout(new BoxLayout(ManageCardsWindow.getInnerJPanel(), BoxLayout.Y_AXIS));
         ManageCardsWindow.getInnerJPanel().setBorder(new EmptyBorder(10, 20, 20, 10));
         
         // Title panel
         JPanel titlePanel = new JPanel(new FlowLayout());
-        JLabel title = new JLabel("Card manager");
+        JLabel title = new JLabel("Card Manager");
         title.setFont(new Font("Verdana", 1, 20));
         title.setBorder(new EmptyBorder(10, 10, 10, 10));
         titlePanel.add(title);
@@ -181,7 +180,7 @@ public final class ManageCardsWindow extends JPanel {
         }
         else {
             // Put cards into memory
-            ManageCardsWindow.setCards(ManageCardsWindow.getDatabaseHandler().selectCards("SELECT * FROM cards"));
+            ManageCardsWindow.setCards(DatabaseHandler.selectCards("SELECT * FROM cards"));
             ManageCardsWindow.getjScrollPane().setSize(new Dimension(800, 445));
             ManageCardsWindow.getjScrollPane().setBorder(new EmptyBorder(0, 0, 10, 0));
             
