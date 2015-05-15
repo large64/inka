@@ -181,7 +181,7 @@ public final class ManageCardsWindow extends JPanel {
         }
         else {
             // Put cards into memory
-            ManageCardsWindow.setCards(ManageCardsWindow.getDatabaseHandler().select("SELECT * FROM cards"));
+            ManageCardsWindow.setCards(ManageCardsWindow.getDatabaseHandler().selectCards("SELECT * FROM cards"));
             ManageCardsWindow.getjScrollPane().setSize(new Dimension(800, 445));
             ManageCardsWindow.getjScrollPane().setBorder(new EmptyBorder(0, 0, 10, 0));
             

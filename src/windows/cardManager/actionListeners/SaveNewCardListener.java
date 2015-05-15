@@ -64,8 +64,8 @@ public final class SaveNewCardListener implements ActionListener {
     }
     
     private boolean cardAlreadyExists() {
-        ArrayList<Card> enDuplicates = new ArrayList<>(this.getDatabaseHandler().select("SELECT * FROM cards WHERE en='" + this.getEnMeaning().getText() + "';"));
-        ArrayList<Card> huDuplicates = new ArrayList<>(this.getDatabaseHandler().select("SELECT * FROM cards WHERE hu='" + this.getHuMeaning().getText() + "';"));
+        ArrayList<Card> enDuplicates = new ArrayList<>(this.getDatabaseHandler().selectCards("SELECT * FROM cards WHERE en='" + this.getEnMeaning().getText() + "';"));
+        ArrayList<Card> huDuplicates = new ArrayList<>(this.getDatabaseHandler().selectCards("SELECT * FROM cards WHERE hu='" + this.getHuMeaning().getText() + "';"));
         
         return (!enDuplicates.isEmpty() || !huDuplicates.isEmpty());
     }
