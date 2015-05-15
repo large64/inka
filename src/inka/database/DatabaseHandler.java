@@ -18,16 +18,16 @@ import sentence.Grammar;
  */
 public class DatabaseHandler {
     // initialize connection
-    private Connection c = null;
-    private Statement statement = null;
+    private static Connection c = null;
+    private static Statement statement = null;
     
     public DatabaseHandler() {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.c = DriverManager.getConnection("jdbc:sqlite:Inka.db");
+            c = DriverManager.getConnection("jdbc:sqlite:Inka.db");
             // disable autocommiting after each operation,
             // this way, we have to do it manually
-            this.c.setAutoCommit(false);
+            c.setAutoCommit(false);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(1);
@@ -35,12 +35,12 @@ public class DatabaseHandler {
         System.out.println("Database connection opened successfully.");
     }
     
-    public List selectCards(String query) {
+    public static List selectCards(String query) {
         List<Card> results = new ArrayList<>();
         try {
-            this.statement = this.c.createStatement();
+            statement = c.createStatement();
             // execute query provided by user
-            ResultSet resultSet = this.statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
             
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -51,7 +51,7 @@ public class DatabaseHandler {
                 results.add(card);
             }
             resultSet.close();
-            this.statement.close();
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
@@ -59,12 +59,12 @@ public class DatabaseHandler {
         return results;
     }
     
-    public List selectGrammar(String query) {
+    public static List selectGrammar(String query) {
         List<Grammar> results = new ArrayList<>();
         try {
-            this.statement = this.c.createStatement();
+            statement = c.createStatement();
             // execute query provided by user
-            ResultSet resultSet = this.statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
             
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -78,7 +78,7 @@ public class DatabaseHandler {
                 results.add(grammar);
             }
             resultSet.close();
-            this.statement.close();
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
@@ -87,16 +87,16 @@ public class DatabaseHandler {
     }
     
     // Use this function to perform all types of queries, eg. insert, update, delete etc.
-    public boolean query(String[] queries) {
+    public static boolean query(String[] queries) {
         try {
-            this.statement = this.c.createStatement();
+            statement = c.createStatement();
         
             for (int i = 0; i < queries.length; ++i) {
-                this.statement.executeUpdate(queries[i]);
+                statement.executeUpdate(queries[i]);
             }
             
             c.commit();
-            this.statement.close();
+            statement.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -104,9 +104,9 @@ public class DatabaseHandler {
         return true;
     }
     
-    public void close() {
+    public static void close() {
         try {
-            this.c.close();
+            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

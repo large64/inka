@@ -33,8 +33,7 @@ public final class GrammarWindow extends JPanel {
 
     public GrammarWindow() {
         this.setLayout(new GridLayout());
-        this.setDataBaseHandler(new DatabaseHandler());
-        this.setGrammarList(this.getDataBaseHandler().selectGrammar("SELECT * FROM grammar"));
+        this.setGrammarList(DatabaseHandler.selectGrammar("SELECT * FROM grammar"));
         createGrammarWindow();
     }
     
