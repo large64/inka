@@ -40,8 +40,6 @@ public class AskingWindow extends JPanel{
      static int j;
      static int k;
      
-     static int step;
-     
      static int status;
      
      //buttons
@@ -68,11 +66,13 @@ public class AskingWindow extends JPanel{
         j = cardDeck.getHardCarNumber();
         k = cardDeck.getEasyCardNumber();
         status = 0;
-        step = 0;
         buttonAgain.setEnabled(false);
         progressOfAsking();
     }
     
+    // this is the main algorithm
+    // it will move tha cards from one set to another
+    // it will decide  which card u r asked from
     private static void progressOfAsking(){
         
         setShowButtonActivitation(true);
@@ -122,10 +122,10 @@ public class AskingWindow extends JPanel{
             setShowButtonActivitation(false);
             setAskingButtonsActivitation(false);
         }
-        // todo : give a sign to user 
         
     }
     
+    // it will ask u from the easiest card
     private static void askFromEasyCards(){
         int size = cardDeck.getEasyCards().size();
         Random rand = new Random();
@@ -141,6 +141,7 @@ public class AskingWindow extends JPanel{
         cardDeck.removeCardFromEasyCards(thisIsWhatIaskeng);
     }
     
+    // it will ask u from the hard cards
     private static void askFromHardCards(){
         int size = cardDeck.getHardCards().size();
         Random rand = new Random();
@@ -156,11 +157,13 @@ public class AskingWindow extends JPanel{
         cardDeck.removeCardFromHardCards(thisIsWhatIaskeng);
     }
     
+    // it will ask u from the hardest cards
+    // if u know, u wont be asked with that card
     private static void askFromHarderCards(){
-        // kerdezek egyet
-        // :) -> belerakja az easybe es torli a harderbol
-        // OK -> belerakja a hardba es torli a harderbol
-        // :( -> ebbe hagyja
+        // ask one
+        // :) -> put into harder
+        // OK -> put into hard
+        // :( -> remove card
         int size = cardDeck.getHarderCards().size();
         Random rand = new Random();
         int breaknumber = rand.nextInt(size);
@@ -209,11 +212,6 @@ public class AskingWindow extends JPanel{
         ShowButtonListener showButtonListener = new ShowButtonListener();
         AgainButtonListener againButtonListener = new AgainButtonListener();
         
-        /*addButton2(":(", choosenButtonsPanel, harderButtonListener);
-        addButton2("OK", choosenButtonsPanel, hardButtonListener);
-        addButton2(":)", choosenButtonsPanel, easyButtonListener);
-        addButton2("Show", choosenButtonsPanel, showButtonListener);*/
-        
         buttonHarder = new JButton(":(");
         buttonHard = new JButton("OK");
         buttonEasy = new JButton(":)");
@@ -232,13 +230,13 @@ public class AskingWindow extends JPanel{
         choosenButtonsPanel.add(buttonShow);
         choosenButtonsPanel.add(buttonAgain);
         
-        
         buttonPanel.add(Box.createVerticalStrut(70));
         buttonPanel.add(textFieldPanel, BorderLayout.NORTH);
         buttonPanel.add(choosenButtonsPanel, BorderLayout.SOUTH);
         this.add(buttonPanel);
     }
     
+    // start asking test again for the user
     private  class AgainButtonListener implements ActionListener{
         
         @Override
@@ -253,7 +251,6 @@ public class AskingWindow extends JPanel{
             j = cardDeck.getHardCarNumber();
             k = cardDeck.getEasyCardNumber();
             status = 0;
-            step = 0;
             buttonAgain.setEnabled(false);
             setShowButtonActivitation(true);
             setAskingButtonsActivitation(true);
@@ -261,6 +258,7 @@ public class AskingWindow extends JPanel{
         }
     }
     
+    // show the hungarian meaning of the card
     private static class ShowButtonListener implements ActionListener{
         
         @Override
@@ -271,24 +269,29 @@ public class AskingWindow extends JPanel{
         }
     }
     
+    // write the hungarian meaning to the textfield
     private static void writeToHunTextField(String eng){
         englishText.setText(eng);
     }
     
+    // write the hungarian meaning to the textfield
     private static void writeToEngTextField(String hun){
         hungarianText.setText(hun);
     }
     
+    // set active or inactive the show button
     private static void setShowButtonActivitation(boolean l){
         buttonShow.setEnabled(l);
     }
     
+    // set active or inactive the button : :(, OK, :)
     private static void setAskingButtonsActivitation(boolean l){
         buttonHarder.setEnabled(l);
         buttonHard.setEnabled(l);
         buttonEasy.setEnabled(l);
     }
     
+    // after click on :( button it will put the card into harder cards
     private static class HarderButtonListener implements ActionListener{
         
         @Override
@@ -300,7 +303,7 @@ public class AskingWindow extends JPanel{
         }
     }
     
-    // OK
+    // after click on OK button it will put the card into hard cards
     private static class HardButtonListener implements ActionListener{
         
         @Override
@@ -312,7 +315,7 @@ public class AskingWindow extends JPanel{
         }
     }
     
-    // :)
+    // after click on :) button it will put the card into easy cards
     private static class EasyButtonListener implements ActionListener{
         
         @Override
@@ -326,9 +329,8 @@ public class AskingWindow extends JPanel{
         }
     }
 
+    // set the texts and their properties
     private void SetTextFieldsAndProperties() {
-        //englishText.setText("english");
-        //hungarianText.setText("hungarian");
         englishText.setEditable(false);
         hungarianText.setEditable(false);
         // set all text to center
@@ -340,6 +342,7 @@ public class AskingWindow extends JPanel{
         dochung.setParagraphAttributes(0, dochung.getLength(), center, false);
     }
     
+    
     private static class chooseButtonListener implements ActionListener {
 
         @Override
@@ -349,6 +352,8 @@ public class AskingWindow extends JPanel{
         
     }
     
+    // create button, add button to the container added in parameter
+    // add button an own actionlistener
     private static void addButton(String text, Container container){
         JButton button = new JButton(text);
         button.addActionListener(new AskingWindow.chooseButtonListener());
@@ -356,6 +361,7 @@ public class AskingWindow extends JPanel{
         container.add(Box.createHorizontalStrut(70));
     }
     
+    // load all the card from database
     private void loadCardsFromDatabase()
     {
         this.setCards(this.getDatabaseHandler().select("SELECT * FROM cards"));
@@ -377,22 +383,28 @@ public class AskingWindow extends JPanel{
         cardDeck.WriteOutEverything();
     }
     
+    // get the cards
     public List<Card> getCards() {
         return cards;
     }
-
+    
+    // set the cards for the cards added in parameter
     public void setCards(List<Card> cards) {
         this.cards = cards;
     }
 
+    // get the database handler
     public DatabaseHandler getDatabaseHandler() {
         return databaseHandler;
     }
 
+    // set the databse handler
     public void setDatabaseHandler(DatabaseHandler databaseHandler) {
         this.databaseHandler = databaseHandler;
     }
     
+    // add button to a cointainer added in parameter
+    // add own actionlistener to button
     private static void addButton2(String text, Container container, ActionListener actionListener){
         JButton button = new JButton(text);
         button.addActionListener(actionListener);
