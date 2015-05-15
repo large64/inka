@@ -48,6 +48,10 @@ public class CardDeck {
         studying = false;
     }
     
+    public boolean isStudying(){
+        return studying;
+    }
+    
     public HashMap<String, String> getEasyCards(){
         return easyCards;
     }
@@ -103,7 +107,7 @@ public class CardDeck {
     }
     
     // Delete this function!
-    private void WriteHarderCards()
+    public void WriteHarderCards()
     {
         System.out.println("HarderCards");
         for(String key : harderCards.keySet()){
@@ -167,6 +171,7 @@ public class CardDeck {
         harderCardNumber = number;
     }
     
+    // get the card numbers
     public int getEasyCardNumber(){
         return easyCardNumber;
     }
@@ -203,5 +208,18 @@ public class CardDeck {
     
     public void addCardToEasyCards(String english, String hungarian){
         easyCards.put(english, hungarian);
+    }
+    
+    // check if the easy, hard or harder card is empty
+    public boolean isHarderCardEmpty(){
+        return harderCards.isEmpty();
+    }
+    
+    public boolean isHardCardEmpty(){
+        return hardCards.isEmpty();
+    }
+    
+    public boolean isEasyCardEmpty(){
+        return easyCards.isEmpty();
     }
 }
